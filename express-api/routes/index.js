@@ -5,12 +5,14 @@ const { verifyToken } = require('../middleware/auth')
 const RegisterController = require('../controllers/RegisterController')
 const LoginController = require('../controllers/LoginController')
 const UserController = require('../controllers/UserController')
+const { validateUser } = require('../helper/validators/users')
 
 router.post('/register', validateRegister, RegisterController.store)
 
 router.post('/login', validateLogin, LoginController.submit)
 
 router.route('/admin/users')
-        .get(verifyToken, UserController.getUsers)
+    .get(verifyToken, UserController.getUsers)
+    .post(verifyToken, validateUser, UserController.store)
 
 module.exports = router
