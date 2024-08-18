@@ -16,5 +16,6 @@ router.route('/admin/users')
     .post(verifyToken, validateUser, UserController.store)
 router.route('/admin/users/:id')
     .get(verifyToken, UserController.show)
+    .put(verifyToken, validateUser, UserController.update)
 
 module.exports = router
