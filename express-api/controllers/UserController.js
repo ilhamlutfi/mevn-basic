@@ -149,6 +149,43 @@ const update = async (req, res) => {
             message: "Internal server error",
         });
     }
-};
+}
 
-module.exports = { getUsers, store, show, update }
+const destroy = async (req, res) => {
+    const { id } = req.params
+
+    try {
+        // check user exist
+        const user = await prisma.user.findUnique({
+            where: {
+                id: Number(id)
+            }
+        })
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: `User not found with id: ${id}`
+            })
+        }
+
+        // delete user
+        await prisma.user.delete({
+            where: {
+                id: Number(id)
+            }
+        })
+
+        res.status(200).json({
+            success: true,
+            message: `Delete user by id: ${id}, successfully`
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error' + error
+        })
+    }
+}
+
+module.exports = { getUsers, store, show, update, destroy }
