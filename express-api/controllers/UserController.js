@@ -29,6 +29,41 @@ const getUsers = async (req, res) => {
     }
 }
 
+const show = async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const user = await prisma.user.findUnique({
+            where: {
+                id: Number(id)
+            },
+            select: {
+                id: true,
+                name: true,
+                email: true
+            }
+        })
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: `User not found with id: ${id}`
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `Get user by id: ${id}, successfully`,
+            data: user
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error' + error,
+        })
+    }
+}
+
 const store = async (req, res) => {
     const errors = validationResult(req)
 
@@ -64,4 +99,4 @@ const store = async (req, res) => {
     }
 }
 
-module.exports = { getUsers, store }
+module.exports = { getUsers, store, show }
