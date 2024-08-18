@@ -2,6 +2,7 @@
 const express = require('express')
 const cors = require('cors')
 const parser = require('body-parser')
+const router = require('./routes') // get routes from routes/index.js
 
 // init app
 const app = express()
@@ -24,3 +25,6 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Server started on port ${port}`)
 })
+
+// use router
+app.use('/api', router)
