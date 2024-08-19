@@ -16,6 +16,7 @@
 
                 <div class="ml-end">
                     <ul class="navbar-nav">
+
                         <li class="nav-item">
                             <router-link :to="{ name: 'dashboard' }" class="nav-link">Dashboard</router-link>
                         </li>
@@ -33,3 +34,7 @@
         </div>
     </nav>
 </template>
+
+<script setup>
+
+</script>
