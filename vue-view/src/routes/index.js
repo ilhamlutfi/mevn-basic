@@ -48,14 +48,14 @@ const routes = [{
             requiresAuth: true
         } // <-- Add meta field
     },
-    // {
-    //     path: '/admin/users/:id',
-    //     name: 'admin.users.edit',
-    //     component: () => import( /* webpackChunkName: "home" */ '../views/admin/users/edit.vue'),
-    //     meta: {
-    //         requiresAuth: true
-    //     } // <-- Add meta field
-    // }
+    {
+        path: '/admin/users/:id',
+        name: 'admin.users.edit',
+        component: () => import( /* webpackChunkName: "home" */ '../views/admin/users/edit.vue'),
+        meta: {
+            requiresAuth: true
+        } // <-- Add meta field
+    }
 ]
 
 const router = createRouter({

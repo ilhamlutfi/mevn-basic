@@ -29,8 +29,8 @@
                         <td>{{ user.email }}</td>
                         <td>{{ user.createdAt }}</td>
                         <td class="text-center">
-                            <button class="btn btn-danger me-2">Delete</button>
-                            <button class="btn btn-success">Edit</button>
+                            <router-link :to="{ name: 'admin.users.edit', params: { id: user.id} }" class="btn btn-success me-2">Edit</router-link>
+                            <button class="btn btn-danger">Delete</button>
                         </td>
                     </tr>
                 </tbody>

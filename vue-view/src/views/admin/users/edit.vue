@@ -1,7 +1,7 @@
 <template>
     <div class="p-5 mb-4 bg-light rounded-3 shadow-sm">
         <div class="container-fluid py-5">
-            <h1 class="display-5 fw-bold">Create User Page</h1>
+            <h1 class="display-5 fw-bold">Update User Page</h1>
             <p class="col-md-12 fs-4">Full Stack JavaScript Developer with Express and Vue 3</p>
             <hr />
 
@@ -13,7 +13,7 @@
                     </ul>
                 </div>
 
-                <form @submit.prevent="store">
+                <form @submit.prevent="update">
                     <div class="mb-3">
                         <label for="name">Full Name</label>
                         <input type="text" v-model="form.name" class="form-control" id="name" />
@@ -37,12 +37,14 @@
 </template>
 
 <script setup>
-    import { reactive, ref } from 'vue'
-    import { useRouter } from 'vue-router'
+    import { reactive, ref, onMounted } from 'vue'
+    import { useRouter, useRoute } from 'vue-router'
     import api from '../../../services/api'
     import Cookies from 'js-cookie'
 
     const router = useRouter()
+    const route = useRoute()
+
     const token = Cookies.get('token')
 
     const validation = ref([])
@@ -53,16 +55,26 @@
         password: ''
     })
 
-    const store = async () => {
+    // onMounted
+    onMounted(async () => {
         api.defaults.headers.common['Authorization'] = token
-        await api.post('/admin/users', {
+        await api.get(`/admin/users/${route.params.id}`)
+            .then(response => {
+                form.name = response.data.data.name
+                form.email = response.data.data.email
+            })
+    })
+
+    const update = async () => {
+        api.defaults.headers.common['Authorization'] = token
+        await api.put(`/admin/users/${route.params.id}`, {
             name: form.name,
             email: form.email,
             password: form.password
         })
         .then(() => {
-            alert('User has been created')
-
+            alert('User has been updated')
+            
             router.push({
                 name: 'admin.users.index'
             })
