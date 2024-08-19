@@ -9,7 +9,8 @@ const getUsers = async (req, res) => {
             select: {
                 id: true,
                 name: true,
-                email: true
+                email: true,
+                createdAt: true
             },
             orderBy: {
                 id: 'desc'
