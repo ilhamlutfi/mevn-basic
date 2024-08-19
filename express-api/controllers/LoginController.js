@@ -42,24 +42,24 @@ const submit = async (req, res) => {
             },
         });
 
-        // //user not found
-        // if (!user)
-        //     return res.status(404).json({
-        //         success: false,
-        //         message: "User not found",
-        //     });
+        // user not found
+        if (!user)
+            return res.status(404).json({
+                success: false,
+                message: "Email/Password incorrect",
+            });
 
-        //compare password
+        // compare password
         const isMatch = await bcrypt.compare(
             req.body.password,
             user.password
         );
 
-        //password incorrect
+        // password incorrect
         if (!isMatch)
             return res.status(401).json({
                 success: false,
-                message: "Invalid password",
+                message: "Email/Password incorrect",
             });
 
         //generate token JWT
