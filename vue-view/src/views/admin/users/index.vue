@@ -30,7 +30,7 @@
                         <td>{{ user.createdAt }}</td>
                         <td class="text-center">
                             <router-link :to="{ name: 'admin.users.edit', params: { id: user.id} }" class="btn btn-success me-2">Edit</router-link>
-                            <button class="btn btn-danger">Delete</button>
+                            <button class="btn btn-danger" @click.prevent="destroy(user.id)">Delete</button>
                         </td>
                     </tr>
                 </tbody>
@@ -59,4 +59,13 @@ const fetchUser = async () => {
 onMounted(() => {
     fetchUser()
 })
+
+const destroy = async (id) => {
+    api.defaults.headers.common['Authorization'] = token
+    await api.delete(`/admin/users/${id}`)
+        .then(() => {
+            alert('User deleted successfully')
+            fetchUser()
+        })
+}
 </script>
