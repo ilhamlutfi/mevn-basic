@@ -1,3 +1,4 @@
+
 <template>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container">
@@ -26,6 +27,10 @@
                         </li>
 
                         <li class="nav-item">
+                            <a href="" @click.prevent="logout" class="nav-link">Logout</a>
+                        </li>
+
+                        <li class="nav-item">
                             <router-link :to="{ name: 'register' }" class="nav-link">Register</router-link>
                         </li>
                     </ul>
@@ -36,5 +41,17 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
+import Cookies from 'js-cookie';
 
+const router = useRouter();
+
+const logout = () => {
+    //remove token and user on cookies
+    Cookies.remove('token');
+    Cookies.remove('user');
+
+    //redirect to login
+    router.push({ name: 'login' });
+}
 </script>
